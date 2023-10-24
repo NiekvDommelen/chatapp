@@ -106,27 +106,22 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
     var username = 'user';
-    const socket = io();
 
     const form = document.getElementById('form');
     const input = document.getElementById('input');
     const messages = document.getElementById('messages');
 
+
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         if (input.value) {
-        socket.emit('chat message', {msg: input.value, username: username});
-        input.value = '';
+          const item = document.createElement('li');
+          item.textContent = `${username}: ${input.value}` ;
+          messages.appendChild(item);
+          window.scrollTo(0, document.body.scrollHeight);
+          input.value = '';
         }
     });
-
-    socket.on('chat message', (obj) => {
-        const item = document.createElement('li');
-        item.textContent = `${obj.username}: ${obj.msg}` ;
-        messages.appendChild(item);
-        window.scrollTo(0, document.body.scrollHeight);
-    });
-
 
     function settings_popup(){
         divSettings = document.getElementById('settings');
