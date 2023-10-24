@@ -11,9 +11,9 @@
       #input:focus { outline: none; }
       #form > button {  background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
 
-      #messages { list-style-type: none; margin: 0; padding: 0; position: fixed; top: 0; left: calc( 25% + 5px); right: 0; height: 93vh; overflow: scroll; overflow-x: hidden; }
-      #messages > li { padding: 0.5rem 1rem; }
-      #messages > li:nth-child(odd) { background: #efefef; }
+      .messages { list-style-type: none; margin: 0; padding: 0; position: fixed; top: 0; left: calc( 25% + 5px); right: 0; height: 93vh; overflow: scroll; overflow-x: hidden; }
+      .messages > li { padding: 0.5rem 1rem; }
+      .messages > li:nth-child(odd) { background: #efefef; }
 
       #btnSettings { position: fixed; top: 10px; right: 10px; color: #fff; border: none; width: 3rem; height: 3rem; border-radius: 3px; outline: none;}
       #btnSettingsClose { position: fixed; top: 20%; right: 20%; background: #ff000049; color: #fff; border: none; padding: 10px; border-radius: 3px; outline: none;}
@@ -70,14 +70,14 @@
     <div id="contacts">
 
       <ul>
-        <li>list 1</li>
-        <li>list 2</li>
-        <li>list 3</li>
-        <li>list 4</li>
-        <li>list 5</li>
-        <li>list 1</li>
-        <li>list 2</li>
-        <li>list 3</li>
+        <li onclick="switchChat()" class="1">list 1</li>
+        <li onclick="switchChat()" class="2">list 2</li>
+        <li onclick="switchChat()" class="3">list 3</li>
+        <li onclick="switchChat()" class="4">list 4</li>
+        <li onclick="switchChat()" class="5">list 5</li>
+        <li onclick="switchChat()" class="6">list 6</li>
+        <li onclick="switchChat()" class="7">list 7</li>
+        <li onclick="switchChat()" class="8">list 8</li>
         <li>list 4</li>
         <li>list 5</li>
         <li>list 1</li>
@@ -91,7 +91,16 @@
     </div>
     <div>
 
-      <ul id="messages"></ul>
+      <ul id="1" style="display: block;" class="messages"></ul>
+      <ul id="2" style="display: none; " class="messages"></ul>
+      <ul id="3" style="display: none;" class="messages"></ul>
+      <ul id="4" style="display: none; " class="messages"></ul>
+      <ul id="5" style="display: none; " class="messages"></ul>
+      <ul id="6" style="display: none;" class="messages"></ul>
+      <ul id="7" style="display: none; " class="messages"></ul>
+      <ul id="8" style="display: none; " class="messages"></ul>
+      
+
 
       <form id="form" action="">
         <input id="input" autocomplete="off" /><button>Send</button>
@@ -109,7 +118,7 @@
 
     const form = document.getElementById('form');
     const input = document.getElementById('input');
-    const messages = document.getElementById('messages');
+    var messages = document.getElementById(1);
 
 
     form.addEventListener('submit', (e) => {
@@ -138,6 +147,25 @@
         usernameInput = document.getElementById("username");
         username = usernameInput.value;
     }
+
+    
+    function switchChat(){
+      element = event.target
+      id = element.className
+      elements = document.getElementsByClassName("messages")
+      
+
+      
+      
+      for(i = 0; i < elements.length; i++){
+            elements[i].style.display = "none";
+        }
+      
+      document.getElementById(id).style.display = "block";
+      messages = document.getElementById(id);
+      
+    }
+
     </script>
 
   </body>
