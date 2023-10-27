@@ -79,7 +79,6 @@
         <li onclick="switchChat()" class="6">list 6</li>
         <li onclick="switchChat()" class="7">list 7</li>
         <li onclick="switchChat()" class="8">list 8</li>
-
       </ul>
 
     </div>
@@ -105,20 +104,29 @@
 
 
 
-    <script src="/socket.io/socket.io.js"></script>
+    
     <script>
-    var username = 'user';
-    const socket = io();
-
+    var username = 'user';   
+    var id = 1
     const form = document.getElementById('form');
     const input = document.getElementById('input');
+
     const messages = document.getElementById(1);
 
+
     form.addEventListener('submit', (e) => {
+      var messages = document.getElementById(id);
         e.preventDefault();
         if (input.value) {
-        socket.emit('chat message', {msg: input.value, username: username});
-        input.value = '';
+          const item = document.createElement('div');
+          item.textContent = `${username}: ${input.value}` ;
+          item.style.width = "calc(fit-content)"
+          
+          console.log(item.style)
+          console.log(`calc(100% - ${item.style})`)
+          messages.appendChild(item);
+          item.scrollIntoView(true);
+          input.value = '';
         }
     });
 
@@ -128,7 +136,6 @@
         messages.appendChild(item);
         item.scrollIntoView(true);
     });
-
 
     function settings_popup(){
         divSettings = document.getElementById('settings');
