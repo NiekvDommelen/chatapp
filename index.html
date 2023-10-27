@@ -53,7 +53,7 @@
   <body>
 
     <div style="display: none;" id="settings">
-    
+
         <h1>Settings</h1>
 
         <button id="btnSettingsClose" onclick="settings_popup()">X</button>
@@ -61,13 +61,13 @@
         <div id="divSettings">
             <label for="usernamed">username:</label>
             <input type="text" name="username" id="username" value="user" placeholder="username">
-            
+
             <button onclick="saveSettings()">Save</button>
         </div>
-        
+
     </div>
 
-    
+
     <div id="contacts">
 
       <ul>
@@ -79,7 +79,6 @@
         <li onclick="switchChat()" class="6">list 6</li>
         <li onclick="switchChat()" class="7">list 7</li>
         <li onclick="switchChat()" class="8">list 8</li>
-        
       </ul>
 
     </div>
@@ -100,7 +99,7 @@
       </form>
 
     </div>
-    
+
     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEEUlEQVR4nO2dzUtVQRiHf1JZm4IINcs+3Ba1aFdGZf0RFdo+alMhfiCai4KWkUG0rnXkIu0btcAWgqS3/0DahLZzoffeE0OvVLd775mZ83HHmd8DL8hF3nnPPOdzzpxzAEIIIYQQQgghhBBCwuMogF4AfQAGAok+WeYjcIhzAD4DiAKPTwDONlJEE4AxAGUHOiNyJFRfjErf5M6YAx0QORojjdhNcctA3S2lK08hPGYgdiuZzfNsqtG7hGiLRGceQq45sKDRFomePIQMxBSxBmA+kFiL6Yt+F86uCgiHQkxfqL7KHAr5A4U4BoU4BoU4BoU4BoU4BoU4BoUIoxoXbep/soZCAGwDsK4xbLEu/0shGXfCIYOxpA4KyX7opMtAyBkKyV7IVQMhVygkWyGnAHw0EDIN4GKG9Xh9UD8pN79q3TJ+n+C+xBfJUY1OadsGb4V0AygCKAF4+ddavQvA05Tu36scTySnmhVyCcCEtFmUGkzxUsh2AItV8iwBWEhBRGUsSO7K3xelFoQu5GYGnR5Zxo3QhewF8MMBEZHEKoB9IQsZd0BCVBGPQhVyHMBGws4ryfHglcSS/JYk54bUFpyQtwk6bUVmdOyvkrcdwKDsfmzzq9qCErI7wansDIAWjTZaZfagTRtlqTEYIZA1vGgho9mg1mYLKUWD+VReCVGcB7BssJtqsai31WD3tSw1IVQhkE5+p9FZ/RnOtoykBlPhXgpR3InJWapxANelTePs65ZFXm+FPI7JuZhC3YUUrz+8F/I8JudkCnVPxbTxzCJnsEKmUqj7NYWkt8taSkFI3No8nkFOrw/q7QlqPqBxIXrbIm/Qp72DCWoe0sj/Qa5ZghZicmG4atFhm6e8PzXb+G5457AQ+tDJrOHQyU55w4JJG0WDrdEbIXsSDC7Oal5Rt1nICHpwMcnw+6oMh7TXOIAPGeymqsUbzWXwSkhaN6i+yYXjpPyddIaKmhN8LEQhkOGKyLF4aFC/d0Jcm+SwEvokB8jUm8iRuG5Ye3AT5eYz6PT5Gu19tXiexEshlVNJJ2Sap5ruuQPAPYvrlWqhctyXnJttvpDfVVywqNtbIZAJz511ngmZSyBjrs77q9RDPScsa/ZaiA7d8oiBrohpyzVfl+CFQB7C0RVyGdlCIfj9mJqukNMUkv0jbR0GQg5SSPZCtvGx6K354oCRHOrgMcQxKMQxKMQxKMQxKMQxKMQxKMQxKMQxnBDCV43DrVeN96ZwsyiU6MlDiPoAFj/mglgZZXn7XS7YzggMKWaQI+prZNxKUFNGKYd7Mf9x14G1MHI0htEAmmSIm1sK/tkyhhv12bxNuhK8wsKXKMsxI/fdVD0Oy2meOvd+EEj0yzKrZSeEEEIIIYQQQgghBCHxC5s8/BbI5gHeAAAAAElFTkSuQmCC" id="btnSettings" onclick="settings_popup()"></img>
 
 
@@ -111,7 +110,8 @@
     var id = 1
     const form = document.getElementById('form');
     const input = document.getElementById('input');
-    
+
+    const messages = document.getElementById(1);
 
 
     form.addEventListener('submit', (e) => {
@@ -130,15 +130,22 @@
         }
     });
 
+    socket.on('chat message', (obj) => {
+        const item = document.createElement('div');
+        item.textContent = `${obj.username}: ${obj.msg}` ;
+        messages.appendChild(item);
+        item.scrollIntoView(true);
+    });
+
     function settings_popup(){
         divSettings = document.getElementById('settings');
-        
+
         if(divSettings.style.display == "none"){
             divSettings.style.display = "block";
         }else{
             divSettings.style.display = "none"
         }
-        
+
     }
 
     function saveSettings(){

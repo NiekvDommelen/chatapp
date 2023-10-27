@@ -25,6 +25,6 @@ io.on('connection', (socket) => {
 
 
 
-server.listen(3000 , "10.59.138.129" , () => {
-  console.log('server running at http://10.59.138.129:3000');
+server.listen(3000 , "localhost" , () => {
+  console.log('server running at http://localhost:3000');
 });
