@@ -4,16 +4,16 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>chatapp</title>
     <style>
-      body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: rgb(69, 69, 69); }
 
-      #form {  background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: calc( 25% + 5px); right: 0; display: flex; height: 3rem; max-height: 10vh; box-sizing: border-box; backdrop-filter: blur(10px); }
-      #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
+      #form {  background: rgba(255, 255, 255, 0.25); padding: 0.25rem; position: fixed; bottom: 0; left: calc( 25% + 5px); right: 0; display: flex; height: 3rem; max-height: 10vh; box-sizing: border-box; backdrop-filter: blur(10px); }
+      #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; background: rgba(255, 255, 255, 0.464); color: white;}
       #input:focus { outline: none; }
-      #form > button {  background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
+      #form > button {  background: rgb(0, 150, 52); border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
 
-      .messages { list-style-type: none; margin: 0; padding: 0; position: fixed; top: 0; left: calc( 25% + 5px); right: 0; height: 93vh; overflow: scroll; overflow-x: hidden; }
-      .messages > li { padding: 0.5rem 1rem; }
-      .messages > li:nth-child(odd) { background: #efefef; }
+      .messages {display: flex; flex-direction: column; justify-content: flex-start;  margin: 0; padding: 10px; position: fixed; top: 0; left: calc( 25% + 5px); right: 0; height: 93vh; overflow: scroll; overflow-x: hidden; border: 2px solid red; }
+      .messages > div { border-radius: 15px; padding: 0.5rem 1rem; max-width: 70%;  width: fit-content; background-color: #002aff; overflow-wrap: break-word;}
+      .messages > div:nth-child(odd) {width: fit-content; align-self: flex-end;  background: #1aff00; }
 
       #btnSettings { position: fixed; top: 10px; right: 10px; color: #fff; border: none; width: 3rem; height: 3rem; border-radius: 3px; outline: none;}
       #btnSettingsClose { position: fixed; top: 20%; right: 20%; background: #ff000049; color: #fff; border: none; padding: 10px; border-radius: 3px; outline: none;}
@@ -32,7 +32,7 @@
       }
 
       ::-webkit-scrollbar-track {
-        background: #f1f1f1;
+        background: #f1f1f100;
         
       }
 
@@ -40,6 +40,7 @@
       ::-webkit-scrollbar-thumb {
         background: #acacac;
         border-radius: 30px;
+        width: 5px;
         
       }
 
@@ -78,28 +79,20 @@
         <li onclick="switchChat()" class="6">list 6</li>
         <li onclick="switchChat()" class="7">list 7</li>
         <li onclick="switchChat()" class="8">list 8</li>
-        <li>list 4</li>
-        <li>list 5</li>
-        <li>list 1</li>
-        <li>list 2</li>
-        <li>list 3</li>
-        <li>list 4</li>
-        <li>list 5</li>
         
       </ul>
 
     </div>
     <div>
-
-      <ul id="1" style="display: block;" class="messages"></ul>
-      <ul id="2" style="display: none; " class="messages"></ul>
-      <ul id="3" style="display: none;" class="messages"></ul>
-      <ul id="4" style="display: none; " class="messages"></ul>
-      <ul id="5" style="display: none; " class="messages"></ul>
-      <ul id="6" style="display: none;" class="messages"></ul>
-      <ul id="7" style="display: none; " class="messages"></ul>
-      <ul id="8" style="display: none; " class="messages"></ul>
-      
+     
+      <div id="1" style="display: flex;" class="messages"></div>
+      <div id="2" style="display: none;" class="messages"></div>
+      <div id="3" style="display: none;" class="messages"></div>
+      <div id="4" style="display: none;" class="messages"></div>
+      <div id="5" style="display: none;" class="messages"></div>
+      <div id="6" style="display: none;" class="messages"></div>
+      <div id="7" style="display: none;" class="messages"></div>
+      <div id="8" style="display: none;" class="messages"></div>
 
 
       <form id="form" action="">
@@ -115,19 +108,24 @@
     
     <script>
     var username = 'user';   
-
+    var id = 1
     const form = document.getElementById('form');
     const input = document.getElementById('input');
-    var messages = document.getElementById(1);
+    
 
 
     form.addEventListener('submit', (e) => {
+      var messages = document.getElementById(id);
         e.preventDefault();
         if (input.value) {
-          const item = document.createElement('li');
+          const item = document.createElement('div');
           item.textContent = `${username}: ${input.value}` ;
+          item.style.width = "calc(fit-content)"
+          
+          console.log(item.style)
+          console.log(`calc(100% - ${item.style})`)
           messages.appendChild(item);
-          window.scrollTo(0, document.body.scrollHeight);
+          item.scrollIntoView(true);
           input.value = '';
         }
     });
@@ -148,7 +146,7 @@
         username = usernameInput.value;
     }
 
-    
+
     function switchChat(){
       element = event.target
       id = element.className
@@ -161,11 +159,13 @@
             elements[i].style.display = "none";
         }
       
-      document.getElementById(id).style.display = "block";
-      messages = document.getElementById(id);
+      document.getElementById(id).style.display = "flex";
+      
+      id = parseInt(id)
+      
       
     }
-
+    
     </script>
 
   </body>
